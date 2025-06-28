@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huddle maker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Huddle maker</h1>
+            <div class="header-buttons">
+                <button id="billingBtn" class="billing-btn">💰 Credits</button>
+                <button id="settingsBtn" class="settings-btn">⚙️ Settings</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="section">
+                <h2>📁 Select Repository</h2>
+                <div class="folder-section">
+                    <button id="selectFolderBtn" class="primary-btn">Select Folder</button>
+                    <span id="selectedPath" class="selected-path">No folder selected</span>
+                    <button id="clearFolderBtn" class="secondary-btn" style="display: none;">Clear</button>
+                </div>
+                <div id="branchInfo" class="branch-info" style="display: none;">
+                    <div class="branch-current">
+                        <span class="branch-label">Current Branch:</span>
+                        <span id="currentBranch" class="branch-name"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section full-width-section" id="branchSection" style="display: none;">
+                <h2>🌿 Select Branch</h2>
+                <div class="branch-options">
+                    <label class="radio-label">
+                        <input type="radio" name="branchOption" value="current" checked>
+                        <span class="radio-custom"></span>
+                        <span>Current Branch</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="branchOption" value="select">
+                        <span class="radio-custom"></span>
+                        <span>Select Specific Branch</span>
+                    </label>
+                </div>
+                <div id="branchSelectSection" class="branch-select-section" style="display: none;">
+                    <select id="branchSelect" class="branch-select">
+                        <option value="">Loading branches...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sections-grid">
+                <div class="section">
+                    <h2>👥 Summary Mode</h2>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label class="radio-label">
+                            <input type="radio" name="summaryMode" value="technical" checked>
+                            <span class="radio-custom"></span>
+                            <span>Technical</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="summaryMode" value="general">
+                            <span class="radio-custom"></span>
+                            <span>General</span>
+                        </label>
+                    </div>
+                    
+                    <div id="detailLevelSection" class="detail-level-section">
+                        <h3>📊 Detail Level</h3>
+                        <div class="detail-options">
+                            <label class="radio-label">
+                                <input type="radio" name="detailLevel" value="brief" checked>
+                                <span class="radio-custom"></span>
+                                <span>Brief</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="detailLevel" value="moderate">
+                                <span class="radio-custom"></span>
+                                <span>Moderate</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="detailLevel" value="detailed">
+                                <span class="radio-custom"></span>
+                                <span>Detailed</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>📅 Select Time Period</h2>
+                    <div class="date-options">
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="0" checked>
+                            <span class="radio-custom"></span>
+                            <span>Today</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="1">
+                            <span class="radio-custom"></span>
+                            <span>Yesterday</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="3">
+                            <span class="radio-custom"></span>
+                            <span>3 days</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="7">
+                            <span class="radio-custom"></span>
+                            <span>1 week</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="14">
+                            <span class="radio-custom"></span>
+                            <span>2 weeks</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="30">
+                            <span class="radio-custom"></span>
+                            <span>1 month</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="dateRange" value="custom">
+                            <span class="radio-custom"></span>
+                            <span>Custom</span>
+                        </label>
+                    </div>
+                    
+                    <div id="customDateSection" class="custom-date-section" style="display: none;">
+                        <div class="date-inputs">
+                            <div class="date-input-group">
+                                <label for="startDate">From:</label>
+                                <input type="date" id="startDate" class="date-input">
+                            </div>
+                            <div class="date-input-group">
+                                <label for="endDate">To:</label>
+                                <input type="date" id="endDate" class="date-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section full-width-section">
+                <div class="action-buttons">
+                    <button id="summarizeBtn" class="primary-btn large" disabled>
+                        <span class="btn-text">📊 Summarize</span>
+                        <div class="loading-spinner" style="display: none;"></div>
+                    </button>
+                    <button id="hotFilesBtn" class="secondary-btn large" disabled>
+                        <span class="btn-text">🔥 Hot Files Analysis</span>
+                        <div class="loading-spinner" style="display: none;"></div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="section hot-files-section" style="display: none;">
+                <div class="result-header">
+                    <h2>🔥 Hot Files Analysis</h2>
+                    <button id="copyHotFilesBtn" class="copy-btn">📄 Copy</button>
+                </div>
+                <div class="hot-files-container">
+                    <div id="hotFilesContent" class="hot-files-content"></div>
+                </div>
+            </div>
+
+            <div class="section result-section" style="display: none;">
+                <div class="result-header">
+                    <h2>📝 Huddle Notes</h2>
+                    <button id="copyBtn" class="copy-btn">📄 Copy</button>
+                </div>
+                <div class="result-container">
+                    <div id="resultText" class="result-text"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="renderer.js"></script>
+</body>
+</html> 
