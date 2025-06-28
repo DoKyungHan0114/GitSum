@@ -1,7 +1,7 @@
 {
-  "name": "huddle-maker",
+  "name": "gitsum",
   "version": "1.0.0",
-  "description": "AI-powered Git commit log summarizer for quick team huddles using Claude API",
+  "description": "AI-powered Git commit log summarizer using Claude API",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,8 +9,8 @@
     "build": "electron-builder",
     "pack": "electron-builder --dir"
   },
-  "keywords": ["electron", "git", "ai", "summarizer", "claude", "huddle", "team"],
-  "author": "Huddle maker",
+  "keywords": ["electron", "git", "ai", "summarizer", "claude", "gitsum"],
+  "author": "GitSum",
   "license": "MIT",
   "devDependencies": {
     "electron": "^28.0.0",
@@ -20,8 +20,8 @@
     "axios": "^1.6.0"
   },
   "build": {
-    "appId": "com.huddlemaker.app",
-    "productName": "Huddle maker",
+    "appId": "com.gitsum.app",
+    "productName": "GitSum",
     "directories": {
       "output": "dist"
     },

@@ -230,7 +230,7 @@ function handleSummaryModeChange() {
 
 // Summarize commits
 async function summarizeCommits() {
-    console.log('Create Huddle button clicked!', {
+            console.log('Create Summary button clicked!', {
         hasFolder: !!currentFolderPath,
         hasApiKey: !!currentSettings.apiKey,
         folderPath: currentFolderPath
@@ -293,11 +293,11 @@ async function summarizeCommits() {
         // Show result with branch information
         const branchName = getBranchDisplayName(selectedBranch);
         showResult(summary, branchName, dateRange);
-        showToast('Huddle notes created successfully!', 'success');
+                    showToast('Git summary created successfully!', 'success');
         
     } catch (error) {
         console.error('Error summarizing commits:', error);
-        let errorMessage = 'An error occurred while creating huddle notes.';
+                    let errorMessage = 'An error occurred while creating git summary.';
         
         if (error.message.includes('401')) {
             errorMessage = 'Invalid API key. Please check your settings.';
@@ -424,7 +424,7 @@ function showResult(summary, branchName, dateRange) {
         periodText = dateRange.days === 0 ? 'Today' : `Last ${dateRange.days} days`;
     }
     
-    const header = `🤝 Huddle Notes for branch "${branchName}" (${periodText})\n\n`;
+            const header = `📊 Git Summary for branch "${branchName}" (${periodText})\n\n`;
     const resultContent = header + summary;
     
     resultText.textContent = resultContent;

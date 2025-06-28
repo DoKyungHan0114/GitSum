@@ -256,7 +256,7 @@ Please provide detailed technical information including:
 - Dependencies and integration changes`;
       }
     } else {
-      prompt = `Please summarize the following Git commit logs in English for a general business audience (non-developers). This summary will be used in a quick team huddle, so please provide a very brief 1-2 sentence summary focusing on the main accomplishments and user impact:
+      prompt = `Please summarize the following Git commit logs in English for a general business audience (non-developers). This summary will be used in a quick team summary, so please provide a very brief 1-2 sentence summary focusing on the main accomplishments and user impact:
 
 ${commits}
 
@@ -265,7 +265,7 @@ Please provide a concise summary in 1-2 sentences that covers:
 - Major issues resolved (if any)
 - Overall impact on the product/users
 
-Use simple, non-technical language that can be easily shared in a quick team meeting.`;
+Use simple, non-technical language that can be easily shared in a quick team summary.`;
     }
 
     const response = await axios.post('https://api.anthropic.com/v1/messages', {
