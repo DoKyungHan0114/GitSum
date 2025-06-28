@@ -2,7 +2,8 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
-const axios = require('axios');
+const https = require('https');
+const { URL } = require('url');
 
 let mainWindow;
 let settingsWindow;
@@ -268,7 +269,7 @@ Please provide a concise summary in 1-2 sentences that covers:
 Use simple, non-technical language that can be easily shared in a quick team summary.`;
     }
 
-    const response = await axios.post('https://api.anthropic.com/v1/messages', {
+    const postData = JSON.stringify({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
       messages: [
@@ -277,15 +278,52 @@ Use simple, non-technical language that can be easily shared in a quick team sum
           content: prompt
         }
       ]
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      }
     });
 
-    return response.data.content[0].text;
+    const url = new URL('https://api.anthropic.com/v1/messages');
+    
+    return new Promise((resolve, reject) => {
+      const options = {
+        hostname: url.hostname,
+        port: 443,
+        path: url.pathname,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData),
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01'
+        }
+      };
+
+      const req = https.request(options, (res) => {
+        let data = '';
+        
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        
+        res.on('end', () => {
+          try {
+            const response = JSON.parse(data);
+            if (res.statusCode >= 200 && res.statusCode < 300) {
+              resolve(response.content[0].text);
+            } else {
+              reject(new Error(`HTTP ${res.statusCode}: ${response.error?.message || data}`));
+            }
+          } catch (error) {
+            reject(new Error(`Failed to parse response: ${error.message}`));
+          }
+        });
+      });
+
+      req.on('error', (error) => {
+        reject(error);
+      });
+
+      req.write(postData);
+      req.end();
+    });
   } catch (error) {
     throw error;
   }
